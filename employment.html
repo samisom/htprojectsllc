@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employment - Hometown Projects LLC</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+<a href="index.html" class="logo-container">
+  <img src="logo.png" alt="Hometown Projects LLC logo" class="logo" />
+</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="employment.html" class="active">Employment</a></li>
+                                <!-- Inventory Hover Menu -->
+    <li class="dropdown">
+      <a href="inventory.html">Inventory</a>
+      <div class="dropdown-content">
+        <a href="inventory-plants.html">Plants</a>
+        <a href="inventory-tools.html">Garden Tools</a>
+        <a href="inventory-decor.html">Outdoor Décor</a>
+        <a href="inventory-soil.html">Soil & Fertilizer</a>
+      </div>
+    </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="employment-container">
+    <h1>Join Our Team</h1>
+    <hr class="section-divider" />
+    <p>We're always looking for dedicated and hard-working individuals to join the Hometown Projects crew. Fill out the form below and we’ll get back to you if we’re a good fit.</p>
+
+    <form class="employment-form">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required />
+
+      <label for="position">Position You're Applying For</label>
+      <input type="text" id="position" name="position" required />
+
+      <label for="message">Tell Us About Yourself</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hometown Projects LLC. All rights reserved.</p>
+  </footer>
+</body>
+</html>

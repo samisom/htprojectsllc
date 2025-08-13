@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hometown Projects LLC</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="logo.png" alt="Hometown Projects LLC logo" class="logo" />
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="employment.html">Employment</a></li>
+        <li class="dropdown">
+          <a href="inventory.html">Inventory</a>
+          <div class="dropdown-content">
+            <a href="inventory-plants.html">Plants</a>
+            <a href="inventory-tools.html">Garden Tools</a>
+            <a href="inventory-decor.html">Outdoor Décor</a>
+            <a href="inventory-soil.html">Soil & Fertilizer</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="inventory-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        <h3>Filter by Type</h3>
+        <label><input type="checkbox" class="filter-option" value="perennial" checked> Perennials</label>
+        <label><input type="checkbox" class="filter-option" value="annual" checked> Annuals</label>
+        <label><input type="checkbox" class="filter-option" value="shrub" checked> Shrubs</label>
+        <label><input type="checkbox" class="filter-option" value="succulent" checked> Succulents</label>
+      </aside>
+
+      <!-- Product Grid -->
+      <div class="product-gallery">
+        <h1>Available Products</h1>
+        <div class="product-grid">
+
+          <div class="product-card perennial">
+            <img src="fillerimage-mulch1.jpg" alt="Product Image">
+            <h3>Lavender</h3>
+            <p>Hardy perennial with fragrant blooms.</p>
+            <span class="price">$12.99</span>
+          </div>
+
+          <div class="product-card annual">
+            <img src="fillerimage-mulch1.jpg" alt="Product Image">
+            <h3>Petunias</h3>
+            <p>Colorful and vibrant annual flowers.</p>
+            <span class="price">$4.99</span>
+          </div>
+
+          <div class="product-card shrub">
+            <img src="fillerimage-mulch1.jpg" alt="Product Image">
+            <h3>Boxwood Shrub</h3>
+            <p>Great for hedges and landscaping.</p>
+            <span class="price">$24.99</span>
+          </div>
+
+          <div class="product-card succulent">
+            <img src="fillerimage-mulch1.jpg" alt="Product Image">
+            <h3>Jade Plant</h3>
+            <p>Low-maintenance indoor succulent.</p>
+            <span class="price">$9.99</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Hometown Projects LLC</p>
+  </footer>
+
+  <script>
+    const checkboxes = document.querySelectorAll('.filter-option');
+    const productCards = document.querySelectorAll('.product-card');
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        const activeFilters = Array.from(checkboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value);
+
+        productCards.forEach(card => {
+          const matches = activeFilters.some(filter => card.classList.contains(filter));
+          card.style.display = matches ? 'block' : 'none';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

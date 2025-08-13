@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory - Hometown Projects LLC</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Hometown Projects LLC</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+<a href="index.html" class="logo-container">
+  <img src="logo.png" alt="Hometown Projects LLC logo" class="logo" />
+</a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="employment.html">Employment</a></li>
+                                <!-- Inventory Hover Menu -->
+    <li class="dropdown">
+      <a href="inventory.html">Inventory</a>
+      <div class="dropdown-content">
+        <a href="inventory-plants.html">Plants</a>
+        <a href="inventory-tools.html">Garden Tools</a>
+        <a href="inventory-decor.html">Outdoor Décor</a>
+        <a href="inventory-soil.html">Soil & Fertilizer</a>
+      </div>
+    </li>
+      </ul>
+    </nav>
+  </header>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+    }
+
+    .inventory-overview {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .inventory-overview h1 {
+      color: #8B2C2C;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .inventory-overview p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem 4rem;
+    }
+
+    .category-card {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: #333;
+      padding: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .category-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-card h3 {
+      font-size: 1.4rem;
+      color: #8B2C2C;
+      margin: 0.5rem 0;
+    }
+
+    .category-card p {
+      font-size: 1rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <section class="inventory-overview">
+      <h1>Explore Our Inventory</h1>
+      <p>Select a category to browse the full range of products offered at Habigs Garden.</p>
+
+      <div class="category-grid">
+        <a href="inventory-plants.html" class="category-card">
+          <img src="fillerimage-mulch1.jpg" alt="Plants" />
+          <h3>Plants</h3>
+          <p>Annuals, perennials, shrubs, and more.</p>
+        </a>
+
+        <a href="inventory-tools.html" class="category-card">
+          <img src="fillerimage-mulch1.jpg" alt="Garden Tools" />
+          <h3>Garden Tools</h3>
+          <p>Shovels, rakes, hand tools, and hose gear.</p>
+        </a>
+
+        <a href="inventory-decor.html" class="category-card">
+          <img src="fillerimage-mulch1.jpg" alt="Outdoor Decor" />
+          <h3>Outdoor Décor</h3>
+          <p>Fountains, lighting, statues, and planters.</p>
+        </a>
+
+        <a href="inventory-soil.html" class="category-card">
+          <img src="fillerimage-mulch1.jpg" alt="Soil and Fertilizer" />
+          <h3>Soil & Fertilizer</h3>
+          <p>Topsoil, compost, mulch, and plant food.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

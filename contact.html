@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact / Estimates | Hometown Projects LLC</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contact-section { padding: 2rem 1rem 3rem; max-width: 1000px; margin: 0 auto; }
+    .contact-section h1 { color: #8B2C2C; text-align: center; margin-bottom: 1rem; }
+
+    .mode-switch {
+      display: flex; gap: .75rem; justify-content: center; margin: 1rem auto 2rem;
+    }
+    .mode-btn {
+      background: #eee; border: 2px solid #ccc; color: #333;
+      padding: .6rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 700;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    }
+    .mode-btn.active {
+      background: #8B2C2C; color: #fff; border-color: #8B2C2C;
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    }
+
+    .contact-container { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; }
+    @media (max-width: 900px) { .contact-container { grid-template-columns: 1fr; } }
+
+    .card {
+      background: #fff; border: 2px solid #8B2C2C; border-radius: 10px; padding: 1.25rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    form label { display: block; font-weight: 700; margin-top: .9rem; }
+    form input, form textarea, form select {
+      width: 100%; padding: .6rem .7rem; border: 1px solid #ccc; border-radius: 6px; margin-top: .35rem;
+      font-size: 1rem;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+
+    .submit-btn {
+      margin-top: 1.1rem; background: #8B2C2C; color: #fff; border: none;
+      padding: .7rem 1.25rem; border-radius: 8px; font-weight: 700; cursor: pointer;
+      transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .submit-btn:hover { background: #9f4747; transform: translateY(-2px); }
+
+    .contact-info h3 { color: #8B2C2C; margin-top: .25rem; }
+    .muted { color: #666; font-size: .95rem; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="logo.png" alt="Hometown Projects LLC logo" class="logo" />
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html" aria-current="page">Contact Us</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Services</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact-section">
+    <h1>Contact Us</h1>
+
+    <div class="mode-switch">
+      <button class="mode-btn active" id="btn-inquiry" type="button">General Inquiry</button>
+      <button class="mode-btn" id="btn-estimate" type="button">Request an Estimate</button>
+    </div>
+
+    <div class="contact-container">
+      <!-- FORM CARD -->
+      <form id="contactForm" class="card" novalidate>
+        <input type="hidden" id="mode" name="mode" value="inquiry">
+
+        <!-- Common fields -->
+        <div class="row">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="phone">Phone <span class="muted">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel">
+          </div>
+          <div id="serviceField" class="hidden">
+            <label for="service">Service</label>
+            <select id="service" name="service">
+              <option value="">Select a service…</option>
+              <option>Lawn Care</option>
+              <option>Landscaping</option>
+              <option>Tree Trimming</option>
+              <option>Snow Removal</option>
+              <option>Gutter Cleaning</option>
+              <option>Mulching</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Estimate-only fields (Preferred Date removed) -->
+        <div id="estimateFields" class="hidden">
+          <div class="row">
+            <div>
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address" autocomplete="street-address">
+            </div>
+            <div>
+              <label for="zip">ZIP</label>
+              <input type="text" id="zip" name="zip" inputmode="numeric" pattern="[0-9]*">
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="contactMethod">Preferred Contact</label>
+              <select id="contactMethod" name="contactMethod">
+                <option>Email</option>
+                <option>Phone</option>
+                <option>Text</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <label for="message" id="messageLabel">Message</label>
+        <textarea id="message" name="message" rows="6" placeholder="How can we help?" required></textarea>
+
+        <button class="submit-btn" type="submit" id="submitBtn">Send Message</button>
+        <p class="muted" id="formNote">We typically reply within 1 business day.</p>
+      </form>
+
+      <!-- INFO CARD -->
+      <div class="contact-info card">
+        <h3>Get in Touch</h3>
+        <p>Email: info@hometownprojects.com</p>
+        <p>Phone: (317) 515-2905</p>
+        <p>Location: Indianapolis, IN</p>
+        <hr style="border:none;height:2px;background:#8B2C2C;border-radius:999px;margin:1rem 0;">
+        <p class="muted">
+          For quick estimates, pick <strong>Request an Estimate</strong> and tell us your service, address, and how you’d like to be contacted.  
+          If you clicked from a service card, we’ll pre-fill the service for you.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Hometown Projects LLC. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const btnInquiry = document.getElementById('btn-inquiry');
+    const btnEstimate = document.getElementById('btn-estimate');
+    const modeInput = document.getElementById('mode');
+
+    const estimateFields = document.getElementById('estimateFields');
+    const serviceField = document.getElementById('serviceField');
+    const message = document.getElementById('message');
+    const messageLabel = document.getElementById('messageLabel');
+    const submitBtn = document.getElementById('submitBtn');
+    const formNote = document.getElementById('formNote');
+    const serviceSelect = document.getElementById('service');
+
+    function setMode(mode) {
+      modeInput.value = mode;
+
+      const isEstimate = mode === 'estimate';
+      btnEstimate.classList.toggle('active', isEstimate);
+      btnInquiry.classList.toggle('active', !isEstimate);
+
+      estimateFields.classList.toggle('hidden', !isEstimate);
+      serviceField.classList.toggle('hidden', !isEstimate);
+
+      messageLabel.textContent = isEstimate ? 'Project Details' : 'Message';
+      message.placeholder = isEstimate
+        ? 'Tell us about your project scope and any details we should know.'
+        : 'How can we help?';
+
+      submitBtn.textContent = isEstimate ? 'Request Estimate' : 'Send Message';
+      formNote.textContent = isEstimate
+        ? 'We’ll follow up to confirm any details for your estimate.'
+        : 'We typically reply within 1 business day.';
+    }
+
+    function prefillServiceFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const svc = params.get('service');
+      if (svc) {
+        const options = Array.from(serviceSelect.options).map(o => o.value.toLowerCase());
+        if (!options.includes(svc.toLowerCase())) {
+          const opt = document.createElement('option');
+          opt.value = svc;
+          opt.textContent = svc;
+          serviceSelect.appendChild(opt);
+        }
+        serviceSelect.value = svc;
+        setMode('estimate');
+      } else {
+        setMode('inquiry');
+      }
+    }
+
+    btnInquiry.addEventListener('click', () => setMode('inquiry'));
+    btnEstimate.addEventListener('click', () => setMode('estimate'));
+
+    prefillServiceFromURL();
+  </script>
+</body>
+</html>
