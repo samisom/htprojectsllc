@@ -1,3 +1,4 @@
+const endpoint = 'https://script.google.com/macros/s/…/exec';
 // Reveal service boxes with subtle slide-in effect
 window.addEventListener("scroll", () => {
     const boxes = document.querySelectorAll(".service-box");
