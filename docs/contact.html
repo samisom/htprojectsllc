@@ -162,63 +162,78 @@
   <footer>
     <p>© 2025 Hometown Projects LLC. All rights reserved.</p>
   </footer>
+// Safe helpers
+const $ = (id) => document.getElementById(id);
 
-  <script>
-    const btnInquiry = document.getElementById('btn-inquiry');
-    const btnEstimate = document.getElementById('btn-estimate');
-    const modeInput = document.getElementById('mode');
+// Grab elements (may be null — that's ok)
+const btnInquiry    = $('btn-inquiry');
+const btnEstimate   = $('btn-estimate');
+const modeInput     = $('mode');
 
-    const estimateFields = document.getElementById('estimateFields');
-    const serviceField = document.getElementById('serviceField');
-    const message = document.getElementById('message');
-    const messageLabel = document.getElementById('messageLabel');
-    const submitBtn = document.getElementById('submitBtn');
-    const formNote = document.getElementById('formNote');
-    const serviceSelect = document.getElementById('service');
+const estimateFields = $('estimateFields');
+const serviceField   = $('serviceField');
+const message        = $('message');
+const messageLabel   = $('messageLabel');
+const submitBtn      = $('submitBtn');
+const formNote       = $('formNote');
+const serviceSelect  = $('service');
 
-    function setMode(mode) {
-      modeInput.value = mode;
+// Mode switcher (guards every DOM reference)
+function setMode(mode) {
+  if (modeInput) modeInput.value = mode;
 
-      const isEstimate = mode === 'estimate';
-      btnEstimate.classList.toggle('active', isEstimate);
-      btnInquiry.classList.toggle('active', !isEstimate);
+  const isEstimate = mode === 'estimate';
+  if (btnEstimate) btnEstimate.classList.toggle('active', isEstimate);
+  if (btnInquiry)  btnInquiry.classList.toggle('active', !isEstimate);
 
-      estimateFields.classList.toggle('hidden', !isEstimate);
-      serviceField.classList.toggle('hidden', !isEstimate);
+  if (estimateFields) estimateFields.classList.toggle('hidden', !isEstimate);
+  if (serviceField)   serviceField.classList.toggle('hidden', !isEstimate);
 
-      messageLabel.textContent = isEstimate ? 'Project Details' : 'Message';
-      message.placeholder = isEstimate
-        ? 'Tell us about your project scope and any details we should know.'
-        : 'How can we help?';
+  if (messageLabel) messageLabel.textContent = isEstimate ? 'Project Details' : 'Message';
+  if (message) {
+    message.placeholder = isEstimate
+      ? 'Tell us about your project scope and any details we should know.'
+      : 'How can we help?';
+  }
 
-      submitBtn.textContent = isEstimate ? 'Request Estimate' : 'Send Message';
-      formNote.textContent = isEstimate
-        ? 'We’ll follow up to confirm any details for your estimate.'
-        : 'We typically reply within 1 business day.';
+  if (submitBtn) submitBtn.textContent = isEstimate ? 'Request Estimate' : 'Send Message';
+  if (formNote) {
+    formNote.textContent = isEstimate
+      ? 'We’ll follow up to confirm any details for your estimate.'
+      : 'We typically reply within 1 business day.';
+  }
+}
+
+// Prefill service from URL and choose the right mode
+function prefillServiceFromURL() {
+  if (!serviceSelect) { setMode('inquiry'); return; }
+  const params = new URLSearchParams(window.location.search);
+  const svc = params.get('service');
+  if (svc) {
+    const options = Array.from(serviceSelect.options).map(o => o.value.toLowerCase());
+    if (!options.includes(svc.toLowerCase())) {
+      const opt = document.createElement('option');
+      opt.value = svc;
+      opt.textContent = svc;
+      serviceSelect.appendChild(opt);
     }
+    serviceSelect.value = svc;
+    setMode('estimate');
+  } else {
+    setMode('inquiry');
+  }
+}
 
-    function prefillServiceFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      const svc = params.get('service');
-      if (svc) {
-        const options = Array.from(serviceSelect.options).map(o => o.value.toLowerCase());
-        if (!options.includes(svc.toLowerCase())) {
-          const opt = document.createElement('option');
-          opt.value = svc;
-          opt.textContent = svc;
-          serviceSelect.appendChild(opt);
-        }
-        serviceSelect.value = svc;
-        setMode('estimate');
-      } else {
-        setMode('inquiry');
-      }
-    }
+// Wire buttons if present
+if (btnInquiry)  btnInquiry.addEventListener('click', () => setMode('inquiry'));
+if (btnEstimate) btnEstimate.addEventListener('click', () => setMode('estimate'));
 
-    btnInquiry.addEventListener('click', () => setMode('inquiry'));
-    btnEstimate.addEventListener('click', () => setMode('estimate'));
-
-    prefillServiceFromURL();
+// Run once the DOM is ready (covers early script execution)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', prefillServiceFromURL);
+} else {
+  prefillServiceFromURL();
+}
   <!-- Load page JS after HTML -->
   <script src="script.js?v=9"></script>
 </body>
