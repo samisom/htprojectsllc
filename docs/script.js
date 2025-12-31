@@ -2,7 +2,7 @@
 console.log('JS alive');
 
 // === Apps Script endpoint (must end with /exec) ===
-const endpoint = 'https://script.google.com/macros/s/AKfycbwJAUHbDMbGxEMwOSPRn5ZsauEE9a5z7NWJOcPJZf2SzKVzNe4pnVnBvdCShvJXxRVY/exec';
+const endpoint = 'https://script.google.com/macros/s/AKfycbzAfQA0U5vK3E3wgVUIqAcelddup7h3iiR5bpwIWNryFT0w9wtMm40Xzjg9zqxo3zn9/exec';
 console.log('Endpoint:', endpoint);
 
 // === Reveal service boxes with subtle slide-in effect (kept from your code) ===
