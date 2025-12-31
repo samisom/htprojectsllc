@@ -1,11 +1,11 @@
-alert('script.js loaded');           // temporary
-console.log('JS alive');             // should appear in Console
+// (optional) remove after confirming once
+console.log('JS alive');
 
 // === Apps Script endpoint (must end with /exec) ===
 const endpoint = 'https://script.google.com/macros/s/AKfycbwJAUHbDMbGxEMwOSPRn5ZsauEE9a5z7NWJOcPJZf2SzKVzNe4pnVnBvdCShvJXxRVY/exec';
 console.log('Endpoint:', endpoint);
 
-// === Reveal service boxes with subtle slide-in effect ===
+// === Reveal service boxes with subtle slide-in effect (kept from your code) ===
 window.addEventListener('scroll', () => {
   const boxes = document.querySelectorAll('.service-box');
   boxes.forEach((box, i) => {
@@ -15,12 +15,12 @@ window.addEventListener('scroll', () => {
       setTimeout(() => {
         box.style.opacity = '1';
         box.style.transform = 'translateY(0)';
-      }, i * 100); // Slight stagger
+      }, i * 100);
     }
   });
 });
 
-// === Hover details helpers ===
+// === Hover details helpers (kept from your code) ===
 function showDetails(serviceBox) {
   const details = serviceBox.querySelector('.service-details');
   if (details) details.style.display = 'block';
@@ -30,89 +30,153 @@ function hideDetails(serviceBox) {
   if (details) details.style.display = 'none';
 }
 
-// --- helper: normalize field names so your sheet gets consistent columns ---
-function normalizePayload(raw, type) {
-  const p = { ...raw };
-
-  // preferred contact: accept either `preferred` or `contactMethod`
-  if (!p.preferred && p.contactMethod) p.preferred = p.contactMethod;
-
-  // message/details: inquiry uses `message`, estimate uses `details`
-  if (type === 'inquiry') {
-    if (!p.message && p.details) p.message = p.details;
-  } else if (type === 'estimate') {
-    if (!p.details && p.message) p.details = p.message;
-  }
-
-  p.type = type;
-  p.source = window.location.pathname;
-  return p;
-}
-
-// --- shared sender ---
-async function sendToSheet(payload, msgEl, btn) {
-  try {
-    if (btn) btn.disabled = true;
-    if (msgEl) msgEl.textContent = '';
-
-    // NOTE: no-cors ⇒ response is opaque; treat as success if no exception.
-    await fetch(endpoint, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    if (msgEl) {
-      msgEl.textContent = 'Thanks! We received your request.';
-      msgEl.style.color = 'green';
-    }
-  } catch (err) {
-    console.error(err);
-    if (msgEl) {
-      msgEl.textContent = 'Sorry, something went wrong. Please try again or email us.';
-      msgEl.style.color = 'red';
-    }
-  } finally {
-    if (btn) btn.disabled = false;
-  }
-}
-
-// === Wire up both forms ===
+// ===== One-form wiring to match your contact.html =====
 (function () {
   if (!window.fetch) return;
 
-  // --- General Inquiry ---
-  const inquiryForm = document.getElementById('inquiry-form');
-  if (inquiryForm) {
-    const msg = document.getElementById('inquiry-msg');
-    const btn = document.getElementById('inquiry-submit');
+  const $ = (id) => document.getElementById(id);
 
-    inquiryForm.addEventListener('submit', async (e) => {
+  // Elements from your contact.html
+  const form         = $('contactForm');
+  const btnSubmit    = $('submitBtn');
+  const statusMsg    = $('form-msg');          // <p id="form-msg">
+  const btnInquiry   = $('btn-inquiry');
+  const btnEstimate  = $('btn-estimate');
+  const modeInput    = $('mode');              // <input id="mode" name="type" value="inquiry">
+
+  const estimateFields = $('estimateFields');  // container to show/hide
+  const serviceField   = $('serviceField');
+
+  const messageLabel = $('messageLabel');
+  const message      = $('message');
+  const formNote     = $('formNote');
+  const serviceSelect= $('service');
+
+  // Normalize field names so the Sheet columns are consistent
+  function normalizePayload(raw) {
+    const p = { ...raw };
+
+    // Ensure we send a type that is either 'inquiry' or 'estimate'
+    p.type = (p.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+
+    // preferred contact: accept either `preferred` or `contactMethod`
+    if (!p.preferred && p.contactMethod) p.preferred = p.contactMethod;
+
+    // Map message/details depending on mode
+    if (p.type === 'estimate') {
+      if (!p.details && p.message) p.details = p.message;
+    } else {
+      if (!p.message && p.details) p.message = p.details;
+    }
+
+    // Add source path for context
+    p.source = window.location.pathname;
+    return p;
+  }
+
+  async function sendToSheet(payload) {
+    try {
+      if (btnSubmit) btnSubmit.disabled = true;
+      if (statusMsg) statusMsg.textContent = '';
+
+      await fetch(endpoint, {
+        method: 'POST',
+        mode: 'no-cors', // opaque; treat as success if no exception
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (statusMsg) {
+        statusMsg.textContent = 'Thanks! We received your request.';
+        statusMsg.style.color = 'green';
+      }
+
+      if (form) form.reset();
+      // preserve current mode value after reset
+      if (modeInput && payload.type) modeInput.value = payload.type;
+
+    } catch (err) {
+      console.error(err);
+      if (statusMsg) {
+        statusMsg.textContent = 'Sorry, something went wrong. Please try again.';
+        statusMsg.style.color = 'red';
+      }
+    } finally {
+      if (btnSubmit) btnSubmit.disabled = false;
+    }
+  }
+
+  // Mode UI toggles
+  function setMode(mode) {
+    if (modeInput) modeInput.value = mode;
+
+    const isEstimate = mode === 'estimate';
+    if (btnEstimate) btnEstimate.classList.toggle('active', isEstimate);
+    if (btnInquiry)  btnInquiry.classList.toggle('active', !isEstimate);
+
+    if (estimateFields) estimateFields.classList.toggle('hidden', !isEstimate);
+    if (serviceField)   serviceField.classList.toggle('hidden', !isEstimate);
+
+    if (messageLabel) messageLabel.textContent = isEstimate ? 'Project Details' : 'Message';
+    if (message) {
+      message.placeholder = isEstimate
+        ? 'Tell us about your project scope and any details we should know.'
+        : 'How can we help?';
+    }
+    if (btnSubmit) btnSubmit.textContent = isEstimate ? 'Request Estimate' : 'Send Message';
+    if (formNote) {
+      formNote.textContent = isEstimate
+        ? 'We’ll follow up to confirm any details for your estimate.'
+        : 'We typically reply within 1 business day.';
+    }
+  }
+
+  // Initialize mode from URL (?mode=estimate&service=...)
+  function prefillFromURL() {
+    let startMode = 'inquiry';
+    const params = new URLSearchParams(window.location.search);
+
+    const urlMode = (params.get('mode') || '').toLowerCase();
+    if (urlMode === 'estimate') startMode = 'estimate';
+
+    const svc = params.get('service');
+    if (svc && serviceSelect) {
+      const options = Array.from(serviceSelect.options).map(o => o.value.toLowerCase());
+      if (!options.includes(svc.toLowerCase())) {
+        const opt = document.createElement('option');
+        opt.value = svc; opt.textContent = svc;
+        serviceSelect.appendChild(opt);
+      }
+      serviceSelect.value = svc;
+      startMode = 'estimate';
+    }
+
+    setMode(startMode);
+  }
+
+  // Wire buttons
+  if (btnInquiry)  btnInquiry.addEventListener('click', () => setMode('inquiry'));
+  if (btnEstimate) btnEstimate.addEventListener('click', () => setMode('estimate'));
+
+  // Submit handler for the single form
+  if (form) {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const raw = Object.fromEntries(new FormData(inquiryForm).entries());
-      if ((raw._hp || '').trim() !== '') return; // honeypot
-      const payload = normalizePayload(raw, 'inquiry');
-      console.log('Submitting inquiry:', payload);
-      await sendToSheet(payload, msg, btn);
-      inquiryForm.reset();
+      const raw = Object.fromEntries(new FormData(form).entries());
+
+      // Honeypot: bots fill this; humans shouldn't
+      if ((raw._hp || '').trim() !== '') return;
+
+      const payload = normalizePayload(raw);
+      console.log('Submitting:', payload);
+      await sendToSheet(payload);
     });
   }
 
-  // --- Request Estimate ---
-  const estimateForm = document.getElementById('estimate-form');
-  if (estimateForm) {
-    const msg = document.getElementById('estimate-msg');
-    const btn = document.getElementById('estimate-submit');
-
-    estimateForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const raw = Object.fromEntries(new FormData(estimateForm).entries());
-      if ((raw._hp || '').trim() !== '') return; // honeypot
-      const payload = normalizePayload(raw, 'estimate');
-      console.log('Submitting estimate:', payload);
-      await sendToSheet(payload, msg, btn);
-      estimateForm.reset();
-    });
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', prefillFromURL);
+  } else {
+    prefillFromURL();
   }
 })();
