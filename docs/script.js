@@ -2,7 +2,7 @@
 console.log('JS alive');
 
 // === Apps Script endpoint (must end with /exec) ===
-const endpoint = 'https://script.google.com/macros/s/AKfycbwJAUHbDMbGxEMwOSPRn5ZsauEE9a5z7NWJOcPJZf2SzKVzNe4pnVnBvdCShvJXxRVY/exec';
+const endpoint = 'https://script.google.com/macros/s/AKfycbzHyFwKJW0UToqKRfPDPie-2V604LIevUWOjemeE9hj-0xb462yYkpyEtvufuIePHTC/exec';
 console.log('Endpoint:', endpoint);
 
 // === Reveal service boxes with subtle slide-in effect (kept from your code) ===
@@ -79,12 +79,12 @@ function hideDetails(serviceBox) {
       if (btnSubmit) btnSubmit.disabled = true;
       if (statusMsg) statusMsg.textContent = '';
 
-      await fetch(endpoint, {
-        method: 'POST',
-        mode: 'no-cors', // opaque; treat as success if no exception
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+await fetch(endpoint, {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  body: new URLSearchParams(payload).toString(),
+});
 
       if (statusMsg) {
         statusMsg.textContent = 'Thanks! We received your request.';
