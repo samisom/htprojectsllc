@@ -1,4 +1,3 @@
-
 // === Reveal service boxes with subtle slide-in effect (kept from your code) ===
 window.addEventListener('scroll', () => {
   const boxes = document.querySelectorAll('.service-box');
@@ -23,9 +22,10 @@ function hideDetails(serviceBox) {
   const details = serviceBox.querySelector('.service-details');
   if (details) details.style.display = 'none';
 }
+
 // === Apps Script endpoint (must end with /exec) ===
 const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8UqrY6K2ctrjyACvUud7zbsCwVRiqekoddfcambaRD312XB/exec';
-                  
+
 // ===== One-form wiring to match your contact.html =====
 (function () {
   if (!window.fetch) return;
@@ -47,10 +47,45 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   const message      = $('message');
   const formNote     = $('formNote');
   const serviceSelect= $('service');
-  function showStatus(message, color = 'green') {
+
+  // Normalize field names so the Sheet columns are consistent
+  function normalizePayload(raw) {
+    const payload = { ...raw };
+
+    payload.type = (payload.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+
+    if (!payload.preferred && payload.contactMethod) payload.preferred = payload.contactMethod;
+
+    if (payload.type === 'estimate') {
+      if (!payload.details && payload.message) payload.details = payload.message;
+    } else {
+      if (!payload.message && payload.details) payload.message = payload.details;
+    }
+
+    payload.source = window.location.pathname;
+    return payload;
+  }
+
+  function showStatus(messageText, color = 'green') {
     if (statusMsg) {
-      statusMsg.textContent = message;
+      statusMsg.textContent = messageText;
       statusMsg.style.color = color;
+    }
+  }
+
+  async function sendToSheet(payload) {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed (${response.status})`);
+    }
+
+    const data = await response.json();
+    if (!data.ok) {
+      throw new Error(data.error || 'Submission failed.');
     }
   }
 
@@ -114,7 +149,22 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
 
       // Honeypot: bots fill this; humans shouldn't
       if ((raw._hp || '').trim() !== '') return;
-  
+
+      const payload = normalizePayload(raw);
+
+      try {
+        if (btnSubmit) btnSubmit.disabled = true;
+        showStatus('');
+        await sendToSheet(payload);
+        showStatus('Thanks! We received your request.');
+        if (form) form.reset();
+        setMode(payload.type);
+      } catch (err) {
+        console.error(err);
+        showStatus('Sorry, something went wrong. Please try again.', 'red');
+      } finally {
+        if (btnSubmit) btnSubmit.disabled = false;
+      }
     });
   }
 
