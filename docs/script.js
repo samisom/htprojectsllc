@@ -1,9 +1,3 @@
-// (optional) remove after confirming once
-console.log('JS alive');
-
-// === Apps Script endpoint (must end with /exec) ===
-const endpoint = 'https://script.google.com/macros/s/AKfycbzHyFwKJW0UToqKRfPDPie-2V604LIevUWOjemeE9hj-0xb462yYkpyEtvufuIePHTC/exec';
-console.log('Endpoint:', endpoint);
 
 // === Reveal service boxes with subtle slide-in effect (kept from your code) ===
 window.addEventListener('scroll', () => {
@@ -29,7 +23,9 @@ function hideDetails(serviceBox) {
   const details = serviceBox.querySelector('.service-details');
   if (details) details.style.display = 'none';
 }
-
+// === Apps Script endpoint (must end with /exec) ===
+const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8UqrY6K2ctrjyACvUud7zbsCwVRiqekoddfcambaRD312XB/exec';
+                  
 // ===== One-form wiring to match your contact.html =====
 (function () {
   if (!window.fetch) return;
@@ -51,58 +47,10 @@ function hideDetails(serviceBox) {
   const message      = $('message');
   const formNote     = $('formNote');
   const serviceSelect= $('service');
-
-  // Normalize field names so the Sheet columns are consistent
-  function normalizePayload(raw) {
-    const p = { ...raw };
-
-    // Ensure we send a type that is either 'inquiry' or 'estimate'
-    p.type = (p.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
-
-    // preferred contact: accept either `preferred` or `contactMethod`
-    if (!p.preferred && p.contactMethod) p.preferred = p.contactMethod;
-
-    // Map message/details depending on mode
-    if (p.type === 'estimate') {
-      if (!p.details && p.message) p.details = p.message;
-    } else {
-      if (!p.message && p.details) p.message = p.details;
-    }
-
-    // Add source path for context
-    p.source = window.location.pathname;
-    return p;
-  }
-
-  async function sendToSheet(payload) {
-    try {
-      if (btnSubmit) btnSubmit.disabled = true;
-      if (statusMsg) statusMsg.textContent = '';
-
-await fetch(endpoint, {
-  method: 'POST',
-  mode: 'no-cors',
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  body: new URLSearchParams(payload).toString(),
-});
-
-      if (statusMsg) {
-        statusMsg.textContent = 'Thanks! We received your request.';
-        statusMsg.style.color = 'green';
-      }
-
-      if (form) form.reset();
-      // preserve current mode value after reset
-      if (modeInput && payload.type) modeInput.value = payload.type;
-
-    } catch (err) {
-      console.error(err);
-      if (statusMsg) {
-        statusMsg.textContent = 'Sorry, something went wrong. Please try again.';
-        statusMsg.style.color = 'red';
-      }
-    } finally {
-      if (btnSubmit) btnSubmit.disabled = false;
+  function showStatus(message, color = 'green') {
+    if (statusMsg) {
+      statusMsg.textContent = message;
+      statusMsg.style.color = color;
     }
   }
 
@@ -166,10 +114,7 @@ await fetch(endpoint, {
 
       // Honeypot: bots fill this; humans shouldn't
       if ((raw._hp || '').trim() !== '') return;
-
-      const payload = normalizePayload(raw);
-      console.log('Submitting:', payload);
-      await sendToSheet(payload);
+  
     });
   }
 
