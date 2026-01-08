@@ -48,12 +48,14 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   const formNote     = $('formNote');
   const serviceSelect= $('service');
 
-  // Normalize field names so the Sheet columns are consistent
+  // Normalize field names to match the Sheet headers (include fallbacks).
   function normalizePayload(raw) {
-const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+ const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
     const typeLabel = type === 'estimate' ? 'Estimate' : 'Inquiry';
-    const preferredContact = raw.preferred || raw.contactMethod || '';
     const message = raw.message || raw.details || '';
+    const preferred = raw.contactMethod || raw.preferred || '';
+    const zipValue = raw.zip || '';
+    const sourcePath = window.location.pathname;
 
     return {
       Type: typeLabel,
@@ -61,21 +63,20 @@ const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase
       Email: raw.email || '',
       Phone: raw.phone || '',
       Address: raw.address || '',
-      ZIP: raw.zip || '',
-      PreferredContact: preferredContact,
+      ZIP: zipValue,
+      Zip: zipValue,
+      zip: zipValue,
+      PreferredContact: preferred,
+      preferredContact: preferred,
+      'Preferred Contact': preferred,
       Service: raw.service || '',
       Timeline: raw.timeline || '',
       Budget: raw.budget || '',
       Message: message,
-      SourcePage: window.location.pathname,
+      SourcePage: sourcePath,
+      Source: sourcePath,
+      source: sourcePath,
     };
-  }
-
-  function showStatus(messageText, color = 'green') {
-    if (statusMsg) {
-      statusMsg.textContent = messageText;
-      statusMsg.style.color = color;
-    }
   }
 
   async function sendToSheet(payload) {
