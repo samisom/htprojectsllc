@@ -50,20 +50,25 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
 
   // Normalize field names so the Sheet columns are consistent
   function normalizePayload(raw) {
-    const payload = { ...raw };
+const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+    const typeLabel = type === 'estimate' ? 'Estimate' : 'Inquiry';
+    const preferredContact = raw.preferred || raw.contactMethod || '';
+    const message = raw.message || raw.details || '';
 
-    payload.type = (payload.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
-
-    if (!payload.preferred && payload.contactMethod) payload.preferred = payload.contactMethod;
-
-    if (payload.type === 'estimate') {
-      if (!payload.details && payload.message) payload.details = payload.message;
-    } else {
-      if (!payload.message && payload.details) payload.message = payload.details;
-    }
-
-    payload.source = window.location.pathname;
-    return payload;
+    return {
+      Type: typeLabel,
+      Name: raw.name || '',
+      Email: raw.email || '',
+      Phone: raw.phone || '',
+      Address: raw.address || '',
+      ZIP: raw.zip || '',
+      PreferredContact: preferredContact,
+      Service: raw.service || '',
+      Timeline: raw.timeline || '',
+      Budget: raw.budget || '',
+      Message: message,
+      SourcePage: window.location.pathname,
+    };
   }
 
   function showStatus(messageText, color = 'green') {
@@ -151,14 +156,14 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
       if ((raw._hp || '').trim() !== '') return;
 
       const payload = normalizePayload(raw);
-
+      const submittedMode = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
       try {
         if (btnSubmit) btnSubmit.disabled = true;
         showStatus('');
         await sendToSheet(payload);
         showStatus('Thanks! We received your request.');
         if (form) form.reset();
-        setMode(payload.type);
+        setMode(submittedMode);
       } catch (err) {
         console.error(err);
         showStatus('Sorry, something went wrong. Please try again.', 'red');
