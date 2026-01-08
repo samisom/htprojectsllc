@@ -48,9 +48,9 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   const formNote     = $('formNote');
   const serviceSelect= $('service');
 
-  // Normalize field names to match the Sheet headers (include fallbacks).
+  // Normalize field names to match the Apps Script expectations (lowercase + header keys).
   function normalizePayload(raw) {
- const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+    const type = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
     const typeLabel = type === 'estimate' ? 'Estimate' : 'Inquiry';
     const message = raw.message || raw.details || '';
     const preferred = raw.contactMethod || raw.preferred || '';
@@ -58,31 +58,48 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
     const sourcePath = window.location.pathname;
 
     return {
+      type,
       Type: typeLabel,
+      name: raw.name || '',
       Name: raw.name || '',
+      email: raw.email || '',
       Email: raw.email || '',
+      phone: raw.phone || '',
       Phone: raw.phone || '',
+      address: raw.address || '',
       Address: raw.address || '',
-      ZIP: zipValue,
-      Zip: zipValue,
       zip: zipValue,
+      ZIP: zipValue,
+      contactMethod: preferred,
       PreferredContact: preferred,
-      preferredContact: preferred,
-      'Preferred Contact': preferred,
+      service: raw.service || '',
       Service: raw.service || '',
+      timeline: raw.timeline || '',
       Timeline: raw.timeline || '',
+      budget: raw.budget || '',
       Budget: raw.budget || '',
+      message,
       Message: message,
-      SourcePage: sourcePath,
-      Source: sourcePath,
       source: sourcePath,
+      SourcePage: sourcePath,
     };
   }
 
+  function showStatus(messageText, color = 'green') {
+    if (statusMsg) {
+      statusMsg.textContent = messageText;
+      statusMsg.style.color = color;
+    }
+  }
+
   async function sendToSheet(payload) {
+    const formBody = new URLSearchParams(payload);
     const response = await fetch(endpoint, {
       method: 'POST',
-      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body: formBody.toString(),
     });
 
     if (!response.ok) {
@@ -158,6 +175,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
 
       const payload = normalizePayload(raw);
       const submittedMode = (raw.type || (modeInput ? modeInput.value : 'inquiry')).toLowerCase();
+
       try {
         if (btnSubmit) btnSubmit.disabled = true;
         showStatus('');
