@@ -97,18 +97,25 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'Content-Type': 'application/json',
       },
-      body: formBody.toString(),
+      body: JSON.stringify(payload),
     });
 
-    if (!response.ok) {
-      throw new Error(`Request failed (${response.status})`);
+    const responseText = await response.text();
+    console.log('Contact form response:', response.status, responseText);
+
+    let data = {};
+    if (responseText) {
+      try {
+        data = JSON.parse(responseText);
+      } catch (err) {
+        throw new Error(`Invalid JSON response: ${responseText.slice(0, 200)}`);
+      }
     }
 
-    const data = await response.json();
-    if (!data.ok) {
-      throw new Error(data.error || 'Submission failed.');
+        if (!response.ok || !data.ok) {
+      throw new Error(data.error || `Request failed (${response.status})`);
     }
   }
 
@@ -185,7 +192,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
         setMode(submittedMode);
       } catch (err) {
         console.error(err);
-        showStatus('Sorry, something went wrong. Please try again.', 'red');
+               showStatus(err.message || 'Sorry, something went wrong. Please try again.', 'red');
       } finally {
         if (btnSubmit) btnSubmit.disabled = false;
       }
