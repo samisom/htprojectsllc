@@ -93,11 +93,10 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   }
 
   async function sendToSheet(payload) {
-
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain;charset=UTF-8',
       },
       body: JSON.stringify(payload),
     });
@@ -114,7 +113,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
       }
     }
 
-        if (!response.ok || !data.ok) {
+    if (!response.ok || !data.ok) {
       throw new Error(data.error || `Request failed (${response.status})`);
     }
   }
@@ -172,7 +171,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   if (btnEstimate) btnEstimate.addEventListener('click', () => setMode('estimate'));
 
   // Submit handler for the single form
-   if (form) {
+  if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const raw = Object.fromEntries(new FormData(form).entries());
@@ -203,7 +202,6 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
       }
     });
   }
-
 
   // Run after DOM is ready
   if (document.readyState === 'loading') {
