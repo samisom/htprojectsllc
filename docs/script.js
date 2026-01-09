@@ -93,7 +93,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   }
 
   async function sendToSheet(payload) {
-    const formBody = new URLSearchParams(payload);
+
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
