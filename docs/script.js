@@ -172,7 +172,7 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
   if (btnEstimate) btnEstimate.addEventListener('click', () => setMode('estimate'));
 
   // Submit handler for the single form
-  if (form) {
+   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const raw = Object.fromEntries(new FormData(form).entries());
@@ -192,12 +192,18 @@ const endpoint = 'https://script.google.com/macros/s/AKfycby6l6s3-Qa0t4Yqjg6ad8U
         setMode(submittedMode);
       } catch (err) {
         console.error(err);
-               showStatus(err.message || 'Sorry, something went wrong. Please try again.', 'red');
+        const message = err && err.message ? err.message : '';
+        if (message.includes('Failed to fetch')) {
+          showStatus('Network error. Confirm your Apps Script is deployed and the URL ends with /exec.', 'red');
+          return;
+        }
+        showStatus(message || 'Sorry, something went wrong. Please try again.', 'red');
       } finally {
         if (btnSubmit) btnSubmit.disabled = false;
       }
     });
   }
+
 
   // Run after DOM is ready
   if (document.readyState === 'loading') {
