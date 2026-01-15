@@ -177,9 +177,13 @@ nav ul {
     transition: none;
   }
 
-  .footer-social .nav-link:hover {
+  .footer-social .nav-link:hover,
+  .footer-social .nav-link:focus,
+  .footer-social .nav-link:active,
+  .footer-social .nav-link:visited {
+    color: white;
     background-color: transparent;
-    font-size: 1.5rem;
+    font-size: inherit;
     transform: none;
   }
 
