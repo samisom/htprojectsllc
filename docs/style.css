@@ -183,7 +183,7 @@ nav ul {
   .footer-social .nav-link:visited {
     color: white;
     background-color: transparent;
-    font-size: inherit;
+    font-size: 1.5rem;
     transform: none;
   }
 
