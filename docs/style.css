@@ -81,7 +81,7 @@ nav a {
   transition: all 0.3s ease;
 }
 
-nav a:hover {
+.nav-link:hover {
   font-size: 1.8rem;
   background-color: #e6ad32;
   transform: scale(1.1);
@@ -95,27 +95,23 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
-.instagram-link {
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  text-decoration: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 5px;
-  display: inline-flex;
+/* Instagram Nav Link */
+.header-left {
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  transition: all 0.3s ease;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.instagram-link:hover {
-  background-color: #e6ad32;
-  transform: scale(1.1);
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .instagram-icon {
-  width: 22px;
-  height: 22px;
+  height: 1em;
+  width: auto;
   display: block;
   object-fit: contain;
 }
