@@ -140,11 +140,9 @@ nav ul {
 
 
   /* Footer */
-  footer {
+  .site-footer {
     background-color: #11491f;
     color: white;
-    text-align: center;
-    padding: 1rem;
     margin-top: 2rem;
   }
 
@@ -175,6 +173,16 @@ nav ul {
     flex: 0 0 auto;
   }
 
+  .footer-social .nav-link {
+    transition: none;
+  }
+
+  .footer-social .nav-link:hover {
+    background-color: transparent;
+    font-size: 1.5rem;
+    transform: none;
+  }
+
   @media (max-width: 768px) {
     .footer-inner {
       flex-direction: column;
@@ -185,6 +193,7 @@ nav ul {
       align-items: center;
     }
   }
+
 
   /* ============================
      Contact Section
