@@ -98,20 +98,13 @@ nav ul {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
 }
 
-/* Instagram Nav Link */
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.instagram-link {
-    color: white;
+.instagram-link,
+.facebook-link {
+  color: white;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
