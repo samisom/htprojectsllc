@@ -87,6 +87,38 @@ nav a:hover {
   transform: scale(1.1);
 }
 
+/* Instagram Nav Link */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.instagram-link {
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.instagram-link:hover {
+  background-color: #e6ad32;
+  transform: scale(1.1);
+}
+
+.instagram-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  object-fit: contain;
+}
 
   /* Hero */
   .hero {
