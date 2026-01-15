@@ -111,13 +111,15 @@ nav ul {
   gap: 8px;
 }
 
-.nav-link.instagram-link {
+.nav-link.instagram-link,
+.nav-link.facebook-link {
   border-radius: 5px;
   padding: 0.5rem 1rem;
   transition: all 0.3s ease;
 }
 
-.instagram-icon {
+.instagram-icon,
+.facebook-icon {
   height: 1em;
   width: auto;
   display: block;
