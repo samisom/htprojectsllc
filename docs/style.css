@@ -104,16 +104,17 @@ nav ul {
 }
 
 .instagram-link {
+    color: white;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.instagram-link:link,
-.instagram-link:visited,
-.instagram-link:hover,
-.instagram-link:active {
-  color: white;
+.nav-link.instagram-link {
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
 }
 
 .instagram-icon {
