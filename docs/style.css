@@ -148,6 +148,44 @@ nav ul {
     margin-top: 2rem;
   }
 
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-copy {
+    text-align: center;
+    flex: 1 1 280px;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .footer-logo {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer-social {
+      align-items: center;
+    }
+  }
+
   /* ============================
      Contact Section
      ============================ */
