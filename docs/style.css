@@ -276,6 +276,28 @@ nav a:hover {
   display: block;
   box-sizing: border-box;
 }
+/* Reviews Section */
+.review-card {
+  flex: 1 1 500px;
+  display: block;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.review-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+  border: 4px solid #11491f;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
 
 /* ================================
    SERVICES PAGE (scoped styles)
