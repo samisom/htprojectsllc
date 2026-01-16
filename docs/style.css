@@ -407,9 +407,10 @@ nav ul {
 
 .location-map,
 .location-image,
-.location-depiction {
+.location-depiction,
+.review-card {
   flex: 1 1 500px;
-  min-height: 300px;
+  min-height: 320px;
 }
 
 .location-image img {
@@ -461,7 +462,6 @@ nav ul {
 }
 /* Reviews Section */
 .review-card {
-  flex: 1 1 500px;
   display: block;
   border-radius: 0.5rem;
   overflow: hidden;
