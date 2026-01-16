@@ -395,6 +395,16 @@ nav ul {
   align-items: stretch;
 }
 
+.location-inner--map {
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 900px) {
+  .location-inner--map {
+    flex-wrap: wrap;
+  }
+}
+
 .location-map,
 .location-image,
 .location-depiction {
