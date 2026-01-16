@@ -396,7 +396,8 @@ nav ul {
 }
 
 .location-map,
-.location-image {
+.location-image,
+.location-depiction {
   flex: 1 1 500px;
   min-height: 300px;
 }
@@ -416,6 +417,37 @@ nav ul {
   border-radius: 0.5rem;
   display: block;
   box-sizing: border-box;
+}
+
+.location-depiction {
+  border: 4px solid #11491f;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.location-depiction p {
+  margin-bottom: 0.75rem;
+}
+
+.dash-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dash-list li {
+  margin-bottom: 0.5rem;
+}
+
+.dash-list li::before {
+  content: "- ";
 }
 /* Reviews Section */
 .review-card {
