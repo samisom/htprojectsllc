@@ -127,10 +127,35 @@ nav ul {
 }
 
   /* Hero */
+  /* Hero Background Backdrop */
   .hero {
     text-align: center;
     padding: 3rem 1rem;
-    background: #eee;
+     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #222;
+    background-image: url("homepage_img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    z-index: 0;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+  }
+  
+  .hero > * {
+    position: relative;
+    z-index: 2;
   }
   .hero h1 {
     font-size: 2.5rem;
@@ -138,7 +163,20 @@ nav ul {
   }
 
 
+  main > section:not(.hero) {
+    position: relative;
+    z-index: 2;
+    background-color: #f9f9f9;
+  }
 
+  @media (max-width: 768px) {
+    .hero {
+      background-attachment: scroll;
+    }
+  }
+
+
+  
   /* Footer */
   .site-footer {
     background-color: #11491f;
