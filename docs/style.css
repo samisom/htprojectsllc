@@ -534,6 +534,39 @@ nav ul {
   box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 
+/* Review Card Hover CTA */
+.reviews-section .review-card {
+  position: relative;
+}
+
+.reviews-section .review-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 1;
+}
+
+.reviews-section .review-card__cta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+
+.reviews-section .review-card__cta .estimate-btn {
+  pointer-events: none;
+}
+
+.reviews-section .review-card:hover .review-card__overlay,
+.reviews-section .review-card:hover .review-card__cta {
+  opacity: 1;
+}
 /* ================================
    SERVICES PAGE (scoped styles)
    ================================ */
