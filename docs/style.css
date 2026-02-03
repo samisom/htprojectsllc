@@ -302,10 +302,14 @@ nav ul {
     background-color: #e6ad32;
   }
 
-    /* Contact Background */
+  /* Contact Background */
   .contact-hero {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    min-height: calc(100vh - 180px);
   }
 
   .contact-hero::before {
@@ -325,6 +329,16 @@ nav ul {
   .contact-hero > * {
     position: relative;
     z-index: 1;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    .contact-hero {
+      min-height: calc(100vh - 150px);
+      padding: 32px 20px;
+    }
   }
   /* =============================
      About Page Styles
