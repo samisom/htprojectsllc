@@ -302,19 +302,17 @@ nav ul {
     background-color: #e6ad32;
   }
 
-/* Contact page background covers entire main area */
-.contact-page {
+/* Contact Page Background Fix */
+body.contact-page {
   position: relative;
-  overflow: hidden;
-  min-height: calc(100vh - 180px);
 }
 
-.contact-page::before {
+body.contact-page::before {
   content: "";
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)),
+      linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55)),
     url("contact_background_img.png");
   background-size: cover;
   background-position: center;
@@ -323,22 +321,9 @@ nav ul {
   z-index: 0;
 }
 
-/* Keep all contact page content above the background */
-.contact-page > * {
+body.contact-page > * {
   position: relative;
   z-index: 1;
-}
-
-/* Remove default white section backgrounds on contact page */
-.contact-page > section {
-  background: transparent;
-}
-
-@media (max-width: 768px) {
-  .contact-page {
-    min-height: calc(100vh - 150px);
-    padding: 32px 20px;
-  }
 }
 
   /* =============================
