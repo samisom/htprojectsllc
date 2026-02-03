@@ -302,6 +302,30 @@ nav ul {
     background-color: #e6ad32;
   }
 
+    /* Contact Background */
+  .contact-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)),
+      url("contact_background_img.png");
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px);
+    transform: scale(1.03);
+    z-index: 0;
+  }
+
+  .contact-hero > * {
+    position: relative;
+    z-index: 1;
+  }
   /* =============================
      About Page Styles
      ============================= */
