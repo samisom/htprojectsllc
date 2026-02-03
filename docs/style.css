@@ -302,44 +302,45 @@ nav ul {
     background-color: #e6ad32;
   }
 
-  /* Contact Background */
-  .contact-hero {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: none;
-    margin: 0;
-    min-height: calc(100vh - 180px);
-  }
+/* Contact page background covers entire main area */
+.contact-page {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - 180px);
+}
 
-  .contact-hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)),
-      url("contact_background_img.png");
-    background-size: cover;
-    background-position: center;
-    filter: blur(6px);
-    transform: scale(1.03);
-    z-index: 0;
-  }
+.contact-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.45)),
+    url("contact_background_img.png");
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px);
+  transform: scale(1.03);
+  z-index: 0;
+}
 
-  .contact-hero > * {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* Keep all contact page content above the background */
+.contact-page > * {
+  position: relative;
+  z-index: 1;
+}
 
-  @media (max-width: 768px) {
-    .contact-hero {
-      min-height: calc(100vh - 150px);
-      padding: 32px 20px;
-    }
+/* Remove default white section backgrounds on contact page */
+.contact-page > section {
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .contact-page {
+    min-height: calc(100vh - 150px);
+    padding: 32px 20px;
   }
+}
+
   /* =============================
      About Page Styles
      ============================= */
