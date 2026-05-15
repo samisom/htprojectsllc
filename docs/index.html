@@ -48,8 +48,33 @@
   </header>
   <main>
     <section class="hero">
-      <h1>Hometown Projects</h1>
-      <p>A Name You Can Trust With Your Next Home Project</p>
+      <div class="hero-content">
+        <div class="hero-card">
+          <h2>Request an Estimate</h2>
+          <p class="hero-card__subtitle">Tell us about your project and we’ll reach out with personalized pricing.</p>
+          <form class="hero-form" novalidate>
+            <label for="hero-name">Name</label>
+            <input type="text" id="hero-name" name="name" autocomplete="name" required />
+
+            <label for="hero-email">Email</label>
+            <input type="email" id="hero-email" name="email" autocomplete="email" required />
+
+            <label for="hero-phone">Phone <span class="muted">(optional)</span></label>
+            <input type="tel" id="hero-phone" name="phone" autocomplete="tel" />
+
+            <label for="hero-message">Project Details</label>
+            <textarea id="hero-message" name="message" rows="5" placeholder="Describe your project…" required></textarea>
+
+            <button class="submit-btn" type="submit">Request Estimate</button>
+            <p class="muted hero-note">We’ll follow up within one business day.</p>
+          </form>
+        </div>
+
+        <div class="hero-copy">
+          <h1>Hometown Projects</h1>
+          <p>A Name You Can Trust With Your Next Home Project</p>
+        </div>
+      </div>
     </section>
     
 
@@ -70,8 +95,6 @@
   </div>
 </section>
 
-<section class="intro-split">
-
 <!-- Reviews section (quotes + page) -->
 <section class="location-highlight reviews-section">
   <div class="location-inner reviews-inner">
@@ -81,12 +104,21 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      <img src="specific_reviews.image.png" alt="Customer review quotes from Google" />
-          <span class="review-card__overlay" aria-hidden="true"></span>
-      <span class="review-card__cta" aria-hidden="true">
-        <button class="estimate-btn" type="button" tabindex="-1">View Our Reviews</button>
-      </span>
+      <img src="specific_reviews.image.png" alt="Google review quote screenshot" />
     </a>
+    <div class="reviews-content">
+      <p class="reviews-stars" aria-label="Five star rating">★★★★★</p>
+      <h2 class="reviews-title">See What Local Homeowners Are Saying</h2>
+      <p class="reviews-text">Read real Google reviews from customers who trusted Hometown Projects with their outdoor projects.</p>
+      <a
+        class="reviews-cta"
+        href="https://www.google.com/search?sca_esv=047bacf7e2b6b142&hl=en&sxsrf=ANbL-n4FGz4LQ1x4PsGI_jNm16NuK0GBQw:1768434954782&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOUW8IObK30DY6rfEUQI9zls0q1p-67tK_GyL29Bwjs7G8YiLzLsM92Ao2vDCTst3wkOfSh99vh78lmuEkQGViU5Y7fMhqQ6dnGgMR77HCCXKOiCPaA%3D%3D&q=Hometown+Projects+LLC+Reviews&sa=X&ved=2ahUKEwi46KbKnYySAxXoMtAFHTb0Mi4Q0bkNegQIIxAD&biw=1920&bih=911&dpr=1&aic=0"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        View Our Google Reviews
+      </a>
+    </div>
     <a
       class="review-card"
       href="https://www.google.com/search?sca_esv=047bacf7e2b6b142&hl=en&sxsrf=ANbL-n4FGz4LQ1x4PsGI_jNm16NuK0GBQw:1768434954782&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOUW8IObK30DY6rfEUQI9zls0q1p-67tK_GyL29Bwjs7G8YiLzLsM92Ao2vDCTst3wkOfSh99vh78lmuEkQGViU5Y7fMhqQ6dnGgMR77HCCXKOiCPaA%3D%3D&q=Hometown+Projects+LLC+Reviews&sa=X&ved=2ahUKEwi46KbKnYySAxXoMtAFHTb0Mi4Q0bkNegQIIxAD&biw=1920&bih=911&dpr=1&aic=0"
@@ -94,10 +126,6 @@
       rel="noopener noreferrer"
     >
       <img src="sized_review_img.png" alt="Google reviews page screenshot" />
-         <span class="review-card__overlay" aria-hidden="true"></span>
-      <span class="review-card__cta" aria-hidden="true">
-        <button class="estimate-btn" type="button" tabindex="-1">View Our Reviews</button>
-      </span>
     </a>
   </div>
 </section>
